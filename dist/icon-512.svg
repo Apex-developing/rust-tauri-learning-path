@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rust & Tauri Learning Path icon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="rust" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  <path d="M150 336V168h54l72 104 72-104h54v168h-48V253l-78 108-78-108v83h-48z" fill="url(#rust)"/>
+  <path d="M110 140c54-40 101-64 155-64 61 0 110 22 158 64-44-13-69-20-103-20-48 0-83 15-136 51-22 17-48 38-80 70 11-33 18-49 6-101z" fill="#e2e8f0" opacity="0.9"/>
+  <circle cx="348" cy="175" r="30" fill="#38bdf8"/>
+</svg>

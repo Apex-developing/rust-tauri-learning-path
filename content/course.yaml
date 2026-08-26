@@ -1,0 +1,48 @@
+title: "Rust & Tauri Learning Path"
+language: "en"
+completion_policy:
+  required_score: 100
+  grading: "exact-match"
+modules:
+  - id: "00"
+    slug: orientation-programs-rust-tauri
+    file: "modules/00-orientation-programs-rust-tauri.md"
+  - id: "01"
+    slug: setup-and-first-run
+    file: "modules/01-setup-and-first-run.md"
+  - id: "02"
+    slug: rust-fundamentals
+    file: "modules/02-rust-fundamentals.md"
+  - id: "03"
+    slug: ownership-references-and-slices
+    file: "modules/03-ownership-references-and-slices.md"
+  - id: "04"
+    slug: modelling-data-and-handling-failure
+    file: "modules/04-modelling-data-and-handling-failure.md"
+  - id: "05"
+    slug: organising-and-testing-rust-code
+    file: "modules/05-organising-and-testing-rust-code.md"
+  - id: "06"
+    slug: typescript-for-a-tauri-frontend
+    file: "modules/06-typescript-for-a-tauri-frontend.md"
+  - id: "07"
+    slug: first-tauri-feature
+    file: "modules/07-first-tauri-feature.md"
+  - id: "08"
+    slug: state-errors-and-persistent-data
+    file: "modules/08-state-errors-and-persistent-data.md"
+  - id: "09"
+    slug: async-work-and-progress-updates
+    file: "modules/09-async-work-and-progress-updates.md"
+  - id: "10"
+    slug: files-and-security-boundaries
+    file: "modules/10-files-and-security-boundaries.md"
+  - id: "11"
+    slug: windows-lifecycle-and-system-tray
+    file: "modules/11-windows-lifecycle-and-system-tray.md"
+  - id: "12"
+    slug: tests-builds-and-release-basics
+    file: "modules/12-tests-builds-and-release-basics.md"
+  - id: "13"
+    slug: mobile-and-next-projects
+    file: "modules/13-mobile-and-next-projects.md"
