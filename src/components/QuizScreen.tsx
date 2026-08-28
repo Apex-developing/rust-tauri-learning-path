@@ -107,7 +107,8 @@ export function QuizScreen({ module, onSubmit, onBack, previousAnswers, strings 
                 {question.options.map((option) => {
                   const isSelected = selectedIds.includes(option.id);
                   const isCorrect = correctIds.includes(option.id);
-                  const showCorrect = showFeedback && isCorrect;
+                  const showCorrect = showFeedback && isSelected && isCorrect;
+                  const showMissed = showFeedback && !isSelected && isCorrect;
                   const showIncorrect = showFeedback && isSelected && !isCorrect;
 
                   return (
@@ -118,6 +119,7 @@ export function QuizScreen({ module, onSubmit, onBack, previousAnswers, strings 
                         'option-item',
                         isSelected ? 'selected' : '',
                         showCorrect ? 'correct' : '',
+                        showMissed ? 'missed' : '',
                         showIncorrect ? 'incorrect' : ''
                       ].join(' ')}
                       onClick={() => toggleOption(question.id, option.id, question.select)}
