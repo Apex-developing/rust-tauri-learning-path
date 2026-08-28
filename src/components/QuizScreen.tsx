@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { getNextUnlockedModuleId } from '../lib/course-data';
 import { evaluateQuestion, getCorrectOptionIds } from '../lib/quiz-engine';
 import type { ModuleData, QuizQuestion } from '../types/course';
 
@@ -6,6 +7,8 @@ interface QuizScreenProps {
   module: ModuleData;
   onSubmit: (payload: { moduleId: string; score: number; selectedAnswers: Record<string, string[]>; passed: boolean }) => void;
   onBack: () => void;
+  onStudyNext: () => void;
+  onRetryModule: () => void;
   previousAnswers?: Record<string, string[]>;
   strings: Record<string, string>;
 }
@@ -14,7 +17,7 @@ function buildInitialAnswers(questions: QuizQuestion[]): Record<string, string[]
   return Object.fromEntries(questions.map((question) => [question.id, []]));
 }
 
-export function QuizScreen({ module, onSubmit, onBack, previousAnswers, strings }: QuizScreenProps) {
+export function QuizScreen({ module, onSubmit, onBack, onStudyNext, onRetryModule, previousAnswers, strings }: QuizScreenProps) {
   const initialAnswers = useMemo(() => {
     const base = buildInitialAnswers(module.quizzes);
     return previousAnswers ? { ...base, ...previousAnswers } : base;
@@ -62,6 +65,8 @@ export function QuizScreen({ module, onSubmit, onBack, previousAnswers, strings 
       passed: correctCount === totalQuestions
     };
   }, [answers, module.quizzes]);
+
+  const nextModuleId = getNextUnlockedModuleId(module.id);
 
   const submitQuiz = () => {
     setSubmitted(true);
@@ -152,9 +157,17 @@ export function QuizScreen({ module, onSubmit, onBack, previousAnswers, strings 
           <button type="button" className="primary-button" onClick={submitQuiz}>
             {strings.submitAnswers}
           </button>
+        ) : result.passed ? (
+          <button
+            type="button"
+            className="primary-button"
+            onClick={nextModuleId ? onStudyNext : onBack}
+          >
+            {nextModuleId ? strings.studyNextModule.replace('{number}', nextModuleId) : strings.backToModule}
+          </button>
         ) : (
-          <button type="button" className="primary-button" onClick={onBack}>
-            {result.passed ? strings.backToModule : strings.reviewRetry}
+          <button type="button" className="primary-button" onClick={onRetryModule}>
+            {strings.retryModule}
           </button>
         )}
       </div>

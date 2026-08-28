@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CourseOverview } from './components/CourseOverview';
 import { ModuleReader } from './components/ModuleReader';
 import { QuizScreen } from './components/QuizScreen';
-import { COURSE_DATA, getModuleById } from './lib/course-data';
+import { COURSE_DATA, getModuleById, getNextUnlockedModuleId } from './lib/course-data';
 import { getText, localizeModuleDescription, localizeModuleTitle, type Language } from './lib/i18n';
 import { readProgress, saveProgress, type CourseProgressState, updateModuleResult } from './lib/progress-db';
 import type { ModuleStatus } from './types/course';
@@ -38,6 +38,8 @@ export default function App() {
     quiz: getText(language, 'quiz'),
     submitAnswers: getText(language, 'submitAnswers'),
     reviewRetry: getText(language, 'reviewRetry'),
+    retryModule: getText(language, 'retryModule'),
+    studyNextModule: getText(language, 'studyNextModule'),
     backToModule: getText(language, 'backToModule'),
     correct: getText(language, 'correct'),
     incorrect: getText(language, 'incorrect'),
@@ -144,6 +146,24 @@ export default function App() {
     setProgress(refreshed);
   };
 
+  const handleStudyNext = () => {
+    const nextModuleId = getNextUnlockedModuleId(currentModule.id);
+    if (nextModuleId) {
+      void openModule(nextModuleId);
+    }
+  };
+
+  const handleRetryModule = async () => {
+    const moduleId = currentModule.id;
+    const current = progress.moduleResults[moduleId];
+    if (current) {
+      await updateModuleResult(moduleId, { ...current, selectedAnswers: {} });
+      const refreshed = await readProgress();
+      setProgress(refreshed);
+    }
+    setScreen('module');
+  };
+
   if (!isReady) {
     return <div className="loading-screen">{getText(language, 'loading')}</div>;
   }
@@ -200,6 +220,8 @@ export default function App() {
           module={currentModule}
           previousAnswers={progress.moduleResults[currentModule.id]?.selectedAnswers}
           onBack={() => setScreen('module')}
+          onStudyNext={handleStudyNext}
+          onRetryModule={handleRetryModule}
           onSubmit={handleQuizSubmit}
           strings={strings}
         />
